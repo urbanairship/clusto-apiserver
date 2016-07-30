@@ -858,7 +858,7 @@ Required Parameters:
         return util.dumps("Missing required parameter 'instance_id'", 422)
 
     try:
-        instance = clustoec2.VPCVirtualServer.register(instance_id)
+        instance = VPCVirtualServer.register(instance_id)
     except Exception as e:
         return util.dumps(str(e), 500)
 
