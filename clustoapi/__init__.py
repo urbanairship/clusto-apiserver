@@ -5,8 +5,8 @@
 #
 
 __major__ = 0
-__minor__ = 5
-__release__ = 2
+__minor__ = 6
+__release__ = 0
 __dotbranch__ = (__major__, __minor__,)
 __branch__ = '.'.join(['%d' % (_,) for _ in __dotbranch__])
 __dotversion__ = (__major__, __minor__, __release__,)

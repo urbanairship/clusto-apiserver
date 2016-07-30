@@ -73,6 +73,7 @@ API Docs
 import bottle
 import clusto
 from clusto import script_helper
+from clustoec2 import VPCVirtualServer
 import clustoapi
 import functools
 import importlib
@@ -842,6 +843,26 @@ Examples:
         return util.dumps('%s' % (le,), 404)
     except Exception as e:
         return util.dumps('%s' % (e,), 500)
+
+
+@root_app.post('/ec2')
+def register_ec2_server():
+    """
+Register clusto-ec2 VPCVirtualServer instance from AWS instance ID.
+
+Required Parameters:
+    * instance_id: The AWS EC2 instance ID to register
+"""
+    instance_id = bottle.request.params.getall('instance_id')
+    if not instance_id:
+        return util.dumps("Missing required parameter 'instance_id'", 422)
+
+    try:
+        instance = clustoec2.VPCVirtualServer.register(instance_id)
+    except Exception as e:
+        return util.dumps(str(e), 500)
+
+    return util.show(instance)
 
 
 def _configure(config={}, configfile=None, init_data={}):
