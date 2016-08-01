@@ -862,7 +862,17 @@ Required Parameters:
     except Exception as e:
         return util.dumps(str(e), 500)
 
-    return util.show(instance)
+    response = {
+        "name": instance.name,
+        "driver": instance.driver,
+        "type": instance.type,
+        "attrs": [util.unclusto(a) for a in instance.attrs()],
+        "parents": [util.unclusto(x) for x in instance.parents()],
+        "addresses": instance.get_ips(),
+    }
+    bottle.response.content_type = 'application/json'
+
+    return json.dumps(response)
 
 
 def _configure(config={}, configfile=None, init_data={}):
