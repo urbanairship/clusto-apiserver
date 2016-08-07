@@ -852,6 +852,41 @@ Register clusto-ec2 VPCVirtualServer instance from AWS instance ID.
 
 Required Parameters:
     * instance_id: The AWS EC2 instance ID to register
+
+Examples:
+
+.. code:: bash
+
+    $ ${post} ${server_url}/ec2
+    "Missing required parameter 'instance_id'"
+    HTTP: 422
+    Content-type: application/json
+
+    $ ${post} --data 'instance_id=i-9edf2407' ${server_url}/ec2
+    {
+      "name": "e0000",
+      "driver": "vpcvirtualserver",
+      "type": "server",
+      "parents": [
+        "/vpcsubnet/subnet-eea98989",
+        "/ec2_security_group/sg-1234abcb"
+      ],
+      "attrs": [
+        {
+          "datatype": "string",
+          "number": null,
+          "value": "t2.micro",
+          "key": "aws",
+          "subkey": "ec2_instance_type"
+        },
+        ...
+      ],
+      "addresses": [
+        "10.0.0.10"
+      ]
+    }
+    HTTP: 200
+    Content-type: application/json
 """
     instance_id = bottle.request.params.getall('instance_id')
     if not instance_id:
