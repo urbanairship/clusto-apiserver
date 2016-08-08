@@ -82,6 +82,7 @@ import os
 import string
 import sys
 import util
+import json
 
 
 DOC_SUBSTITUTIONS = {
